@@ -4,6 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
+import { toast } from "sonner";
+import { apliclient } from "@/lib/api-client";
+import { SIGNUP_ROUTES } from "/utils/constants";
 
 
 
@@ -14,8 +17,46 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
 
+  const validateLogin = () => {
+    if(!email.length) {
+      toast.error("Email is required.");
+      return false;
+    }
+    if(!password.length) {
+      toast.error("Password is required");
+      return false;
+    }
+    return true;
+  }
+
+  const validateSignup = () => {
+    if(!email.length) {
+      toast.error("Email is required.");
+      return false;
+    }
+    if(!password.length) {
+      toast.error("Password is required");
+      return false
+    }
+    if(!confirmPassword.length) {
+      toast.error("Confrim Password is required");
+      return false
+    }
+    if(confirmPassword !== password) {
+      toast.error("Password and Confirm Password doesn't match!");
+      return false
+    }
+    return true;
+  };
+
   const handleLogin = async () => {};
-  const handleSignup = async () => {};
+  const handleSignup = async () => {
+    if(validateSignup()) {
+      const response = await apliclient.post(SIGNUP_ROUTES, { email, password}, {withCredentials: ture})
+      console.log(response);
+      
+    }
+  };
 
   return (
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">

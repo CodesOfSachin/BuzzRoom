@@ -1,10 +1,11 @@
-import { genSalt } from "bcrypt";
+import { genSalt, hash } from "bcrypt";
 import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, "Email is required"],
+        unique: true
     },
     password: {
         type: String,
@@ -13,7 +14,7 @@ const userSchema = new mongoose.Schema({
     },
     firstName: {
         type: String,
-        required: true,
+        required: false,
     },
     lastName: {
         type: String,
