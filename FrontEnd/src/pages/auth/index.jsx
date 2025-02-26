@@ -10,9 +10,10 @@ import { useState } from "react";
 
 const Auth = () => { 
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setconfirmPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setconfirmPassword] = useState("");
+
   const handleLogin = async () => {};
   const handleSignup = async () => {};
 
