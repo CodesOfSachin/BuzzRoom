@@ -6,13 +6,15 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { toast } from "sonner";
 import { apliclient } from "@/lib/api-client";
-import { SIGNUP_ROUTES } from "/utils/constants";
+import { SIGNUP_ROUTES, LOGIN_ROUTES } from "/utils/constants";
+import { useNavigate } from "react-router-dom";
+
 
 
 
 
 const Auth = () => { 
-
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
@@ -49,11 +51,30 @@ const Auth = () => {
     return true;
   };
 
-  const handleLogin = async () => {};
+  const handleLogin = async () => {
+    if(validateLogin()) {
+      const response = await apliclient.post(
+        LOGIN_ROUTES,
+        { email, password},
+        { withCredentials: true}
+      );
+      if(response.data.user.id) {
+        if(response.data.user.profileSetup) navigate("/chat");
+        else navigate("/profile")
+      }
+      console.log({ response });
+      
+    }
+  };
+
+
   const handleSignup = async () => {
     if(validateSignup()) {
-      const response = await apliclient.post(SIGNUP_ROUTES, { email, password}, {withCredentials: ture})
-      console.log(response);
+      const response = await apliclient.post(SIGNUP_ROUTES, { email, password}, {withCredentials: true});
+      if (response.status === 201) {
+        navigate("/profile");
+      }
+      console.log({ response });
       
     }
   };
@@ -70,7 +91,7 @@ const Auth = () => {
             <p className="font-medium text-center">Fill in the details to get started with the best chat app!</p>
           </div>
           <div className="flex items-center justify-center w-full">
-            <Tabs className="w-3/4">
+            <Tabs className="w-3/4" defaultValue="login">
               <TabsList className="bg-transparent rounded-none w-full">
                 <TabsTrigger
                   value="login"
