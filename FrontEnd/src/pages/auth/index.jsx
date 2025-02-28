@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { toast } from "sonner";
-import { apliclient } from "@/lib/api-client";
+import { apiClient } from "@/lib/api-client";
 import { SIGNUP_ROUTES, LOGIN_ROUTES } from "/utils/constants";
 import { useNavigate } from "react-router-dom";
 import { useAppStore } from "@/store";
@@ -55,16 +55,21 @@ const Auth = () => {
 
   const handleLogin = async () => {
     if(validateLogin()) {
-      const response = await apliclient.post(
+      const response = await apiClient.post(
         LOGIN_ROUTES,
         { email, password},
         { withCredentials: true}
       );
-      if(response.data.user.id) {
+      if (response.data.user.id) {
         setUserInfo(response.data.user);
-        if(response.data.user.profileSetup) navigate("/chat");
-        else navigate("/profile")
+        if (response.data.user.profileSetup === true) {
+          navigate("/chat");
+        } else {
+          navigate("/profile");
+        }
       }
+      
+      
       console.log({ response });
       
     }
@@ -73,7 +78,7 @@ const Auth = () => {
 
   const handleSignup = async () => {
     if(validateSignup()) {
-      const response = await apliclient.post(SIGNUP_ROUTES, { email, password}, {withCredentials: true});
+      const response = await apiClient.post(SIGNUP_ROUTES, { email, password}, {withCredentials: true});
       if (response.status === 201) {
         setUserInfo(response.data.user);
         navigate("/profile");
