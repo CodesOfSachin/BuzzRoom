@@ -1,15 +1,29 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { getColor } from '@/lib/utils';
 import { useAppStore } from '@/store';
-import { HOST } from '/utils/constants';
+import { HOST, LOGOUT_ROUTE } from '/utils/constants';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { FiEdit2 } from 'react-icons/fi';
 import { IoPowerSharp } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom';
+import { apiClient } from '@/lib/api-client';
 
 const ProfileInfo = () => {
-    const {userInfo} = useAppStore();
+    const {userInfo, setUserInfo } = useAppStore();
     const navigate = useNavigate();
+
+
+    const logOut = async () => {
+        try{
+            const response = await apiClient.post(LOGOUT_ROUTE, {}, {withCredentials: true});
+            if(response.status === 200) {
+                navigate("/auth");
+                setUserInfo(null);
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    };
 
 
   return (
@@ -49,7 +63,7 @@ const ProfileInfo = () => {
             <TooltipTrigger>
                 <IoPowerSharp 
                 className="text-red-500 text-xl font-medium cursor-pointer"
-                onClick={()=> navigate('/profile')}/>
+                onClick={logOut}/>
             </TooltipTrigger>
             <TooltipContent className="cursor-pointer">Edit Profile</TooltipContent>
         </Tooltip>
