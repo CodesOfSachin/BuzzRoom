@@ -20,21 +20,26 @@ const NewDm = () => {
 
     const searchContacts = async (searchTerm) => {
         try {
-            if(searchTerm.length > 0 ) {
-                const response = await apiClient.post(SEARCH_CONTACTS_ROUTES, 
-                    { searchTerm }, { withCredentials: true }
-                );
-            
-                if(response.status === 200 && response.data.contacts) {
-                    setSearchedContacts(response.data.contacts);
-                } else {
-                    setSearchedContacts([]);
-                }
+            if (searchTerm.length === 0) {
+                setSearchedContacts([]);  // Reset contacts when search is cleared
+                return;
             }
-        }catch (error) {
-            console.log({error});
+    
+            const response = await apiClient.post(
+                SEARCH_CONTACTS_ROUTES, 
+                { searchTerm }, 
+                { withCredentials: true }
+            );
+    
+            if (response.status === 200 && response.data.contacts) {
+                setSearchedContacts(response.data.contacts);
+            } else {
+                setSearchedContacts([]);
+            }
+        } catch (error) {
+            console.log({ error });
         }
-    }
+    };
 
     const selectedContact = (contact) => {
        setOpenNewContactModel(false);
@@ -72,7 +77,9 @@ const NewDm = () => {
                     onChange={e=>searchContacts(e.target.value)}
                     />
                 </div>
-                <ScrollArea className="min-h-[10px] max-h-[250px] overflow-y-auto">
+                {
+                    searchedContacts.length > 0 && (
+                        <ScrollArea className="h-[250px] overflow-y-auto">
                     <div className="flex flex-col gap-5">
                         {
                             searchedContacts.map((contact) => (
@@ -110,15 +117,17 @@ const NewDm = () => {
                         }
                     </div>
                 </ScrollArea>
+                    )
+                }
                 {
-                    searchedContacts.length <= 0 && (<div className="flex-1 mt-5 md:bg-[#1c1d25] md:flex flex-col justify-center items-center duration-1000 transition-all">
+                    searchedContacts.length <= 0 && (<div className="flex-1 mt-5 md:mt-0 md:flex flex-col justify-center items-center duration-1000 transition-all">
                         <Lottie 
                          isClickToPauseDisabled={true}
                          height={100}
                          width={100}
                          options={animationDefaultOptions}
                          /> 
-                         <div className="text-opacity-80 text-white flex flex-col gap-5 items-center mt-5 lg:text-2xl text-xl transition-all duration-300 text-center">
+                         <div className="text-opacity-80 text-white flex flex-col gap-5 items-center mt-5  lg:text-2xl text-xl transition-all duration-300 text-center">
                              <h3 className="poppins-medium">
                                  <span className="text-teal-500">Hi</span>! Search new <span className="text-teal-500">Contact.</span>
                              </h3>
