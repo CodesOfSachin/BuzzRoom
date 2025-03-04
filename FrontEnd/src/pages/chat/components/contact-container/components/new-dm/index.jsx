@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
-import { animationDefaultOptions } from "@/lib/utils";
+import { animationDefaultOptions, getColor } from "@/lib/utils";
 import Lottie from "react-lottie";
 import { apiClient } from "@/lib/api-client";
 import { SEARCH_CONTACTS_ROUTES, HOST } from "/utils/constants";
@@ -43,7 +43,7 @@ const NewDm = () => {
 
     const selectedContact = (contact) => {
        setOpenNewContactModel(false);
-       setSelectedChatType("Contact");
+       setSelectedChatType("contact");
        setSelectedChatData(contact)
        setSearchedContacts([]);
     }
@@ -92,7 +92,7 @@ const NewDm = () => {
                                         <AvatarImage 
                                         src={`${HOST}/${contact.image}`} 
                                         alt="profile" 
-                                        className="object-cover w-full h-full bg-black "
+                                        className="object-cover w-full h-full bg-black rounded-full"
                                         /> 
                                         ) : (
                                         <div className={`uppercase h-12 w-12 text-lg border-[1px] flex items-center justify-center rounded-full ${getColor(contact.color)}`}>
