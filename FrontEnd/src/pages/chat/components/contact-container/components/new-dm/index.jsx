@@ -108,7 +108,7 @@ const NewDm = () => {
                                         ? `${contact.firstName} ${contact.lastName}`
                                         : ""}
                                         <span className="text-xs">
-                                            { contact.email}
+                                            { contact.email }
                                         </span>
                                         </span>
                                         </div>
