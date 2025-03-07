@@ -25,7 +25,7 @@ export const SocketProvider = ({ children }) => {
             })
 
             const handleReceiveMessage = (message) => {
-                const { selectedChatData, selectedChatType, addMessage } = useAppStore.getState();
+                const { selectedChatData, selectedChatType, addMessage,  } = useAppStore.getState();
 
                 if(selectedChatType !== undefined && 
                 (selectedChatData._id === message.sender._id || 
@@ -34,15 +34,17 @@ export const SocketProvider = ({ children }) => {
                     console.log("message rc", message);
                     addMessage(message);
                 }
-            }
+                
+            };
 
 
             const handleReceiveChannelMessage = (message) => {
-                const { selectedChatData, selectedChatType, addMessage } = useAppStore.getState();
+                const { selectedChatData, selectedChatType, addMessage, addChannelInChannelList, } = useAppStore.getState();
 
                 if(selectedChatType !== undefined && selectedChatData._id === message.channelId) {
                     addMessage(message);
                 }
+                addChannelInChannelList(message);
             }
 
 
