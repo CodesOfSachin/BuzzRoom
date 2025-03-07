@@ -158,6 +158,36 @@ const MessageContainer = () => {
         </div>
       )}
       {
+          message.messageType === "file" && (
+            <div className={`${message.sender._id === userInfo.id
+              ? "bg-[#8417ff]/5 text-[#8417ff]/90 border-[#8417ff]/50 " 
+              : "bg-[#2a2b33]/5 text-white/80 border-[#ffffff]/20"} border inline-block p-4 rounded my-1 max-w-[50%] break-words`}>
+                {checkIfImage(message.fileUrl) ? (
+                  <div className="cursor-pointer"
+                  onClick={() => {
+                    setShowImage(true);
+                    setImageURL(message.fileUrl);
+                  }}
+                  >
+                  <img src={`${HOST}/${message.fileUrl}`} height={300} width={300} />
+                </div>
+              ) : (
+              <div className="flex items-center justify-center gap-4">
+                <span className="text-white/8 text-3xl bg-black/20 rounded-full p-3">
+                < MdFolderZip />
+                </span>
+                <span>{message.fileUrl.split('/').pop()}</span>
+                <span className="bg-black/20 p-3 text-2xl rounded-full hover:bg-black/50 cursor-pointer transition-all duration-300" 
+                onClick={() => downloadFile(message.fileUrl)}
+                >
+                  < IoMdArrowDown />
+                </span>
+              </div>
+              )}
+              </div>
+           )
+         }
+      {
         message.sender._id !== userInfo.id ? ( <div className="flex items-center justify-start gap-3 ">
            <Avatar className="h-8 w-8 rounded-full overflow-hidden">
                   {
