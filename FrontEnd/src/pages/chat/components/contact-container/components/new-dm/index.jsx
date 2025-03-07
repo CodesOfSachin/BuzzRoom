@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input";
 import { animationDefaultOptions, getColor } from "@/lib/utils";
 import Lottie from "react-lottie";
@@ -15,7 +15,7 @@ import { useAppStore } from "@/store";
 
 const NewDm = () => {
     const { setSelectedChatType, setSelectedChatData } = useAppStore();
-    const [openNewContactModel, setOpenNewContactModel] = useState(false);
+    const [openNewContactModal, setOpenNewContactModal] = useState(false);
     const [searchedContacts, setSearchedContacts] = useState([]);
 
     const searchContacts = async (searchTerm) => {
@@ -42,7 +42,7 @@ const NewDm = () => {
     };
 
     const selectedContact = (contact) => {
-       setOpenNewContactModel(false);
+       setOpenNewContactModal(false);
        setSelectedChatType("contact");
        setSelectedChatData(contact)
        setSearchedContacts([]);
@@ -55,7 +55,7 @@ const NewDm = () => {
             <TooltipTrigger>
                 < FaPlus 
                 className="text-neutral-400 font-light text-opacity-90 text-start hover:text-neutral-100 cursor-pointer transition-all duration-300"
-                onClick={()=> setOpenNewContactModel(true)}
+                onClick={()=> setOpenNewContactModal(true)}
                 />
             </TooltipTrigger>
             <TooltipContent>
@@ -64,7 +64,7 @@ const NewDm = () => {
         </Tooltip>
         </TooltipProvider>
 
-        <Dialog open={openNewContactModel} onOpenChange={setOpenNewContactModel}>
+        <Dialog open={openNewContactModal} onOpenChange={setOpenNewContactModal}>
         <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
             <DialogHeader>
             <DialogTitle>Please select a contact</DialogTitle>
@@ -74,7 +74,7 @@ const NewDm = () => {
                 <div>
                     < Input placeholder="Search Contacts" 
                     className="rounded-lg p-6 bg-[#2c2e3b] border-none"
-                    onChange={e=>searchContacts(e.target.value)}
+                    onChange={(e)=> searchContacts(e.target.value)}
                     />
                 </div>
                 {

@@ -46,12 +46,14 @@ const CreateChannel = () => {
                 setChannelName("");
                 setSelectedContacts([]);
                 setNewChannelModal(false);
-                addChannel(response.data.channel);
+                addChannel(response.data.Channel);
             }
             }
         } catch (error) {
-            console.log({error});
-        }
+            console.error("Failed to create channel:", error);
+            alert("Something went wrong. Please try again.");
+         }
+         
     };
 
   return (
@@ -80,7 +82,7 @@ const CreateChannel = () => {
                 <div>
                     < Input placeholder="Channel Name" 
                     className="rounded-lg p-6 bg-[#2c2e3b] border-none"
-                    onChange={e=>setChannelName(e.target.value)}
+                    onChange={(e) => setChannelName(e.target.value)}
                     value={channelName}
                     />
                 </div>
