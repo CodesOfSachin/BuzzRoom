@@ -8,6 +8,7 @@ import { IoMdArrowDown } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
+import { GET_CHANNEL_MESSAGES } from "/utils/constants";
 
 
 const MessageContainer = () => {
@@ -34,8 +35,21 @@ const MessageContainer = () => {
           }
         }
 
+        const getChannelMessages = async () => {
+          try {
+            const response = await apiClient.get(`${GET_CHANNEL_MESSAGES}/${selectedChatData._id}`, 
+              {withCredentials: true},);
+              if(response.data.messages) {
+                setSelectedChatMessages(response.data.messages);
+              }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+
         if(selectedChatData._id) {
           if(selectedChatType === "contact") getMessages();
+          else if(selectedChatType === "channel") getChannelMessages();
         }
       }, [ selectedChatData, selectedChatType, setSelectedChatMessages ])
 
