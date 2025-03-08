@@ -45,7 +45,7 @@ const ContactsContainer = () => {
             < Title text="Direct Messages" />
             < NewDm />
         </div>
-        <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+        <div className="max-h-[38vh] overflow-y-auto custom-scrollbar">
           < ContactList contacts={directMessagesContacts} />
         </div>
       </div>
@@ -54,7 +54,7 @@ const ContactsContainer = () => {
             < Title text="Channels" />
             < CreateChannel />
         </div>
-        <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden">
+        <div className="max-h-[38vh] overflow-y-auto custom-scrollbar">
           {console.log("Channels:", channels)}
           < ContactList contacts={channels} isChannel={true} />
         </div>
