@@ -107,9 +107,6 @@ const NewDm = () => {
                                         {contact.firstName || contact.lastName 
                                         ? `${contact.firstName} ${contact.lastName}`
                                         : ""}
-                                        <span className="text-xs">
-                                            { contact.email }
-                                        </span>
                                         </span>
                                         </div>
                                 </div>

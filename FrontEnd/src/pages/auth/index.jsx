@@ -115,7 +115,7 @@ const Auth = () => {
                   Signup
                 </TabsTrigger>
               </TabsList>
-              <TabsContent className="flex flex-col gap-5 mt-10" value="login">
+              <TabsContent className="flex flex-col gap-5 mt-5" value="login">
                 <Input
                   placeholder="Email"
                   type="email"
@@ -136,7 +136,7 @@ const Auth = () => {
                 </Button>
               </TabsContent>
   
-              <TabsContent className="flex flex-col gap-5 mt-10" value="signup">
+              <TabsContent className="flex flex-col gap-5 mt-5" value="signup">
                 <Input
                   placeholder="Email"
                   type="email"
