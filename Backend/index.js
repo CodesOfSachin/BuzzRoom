@@ -16,7 +16,10 @@ const app = express();
 const port = process.env.PORT || 3001;
 const databaseURL =  process.env.DATABASE_URL;
 
+const allowedOrigins = ["https://your-app-name.netlify.app"];
+
 app.use(cors({
+    origin: allowedOrigins,
     origin: [process.env.ORIGIN],
     methods: ["GET","POST","PUT","PATCH","DELETE"],
     credentials: true,
@@ -34,7 +37,7 @@ app.use("/api/messages", messagesRoutes);
 app.use("/api/channel", channelRoutes);
 
 const server = app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);    
+    console.log(`Server is running at ${port}`);    
 })
 
 setupSocket(server);
