@@ -16,10 +16,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 const databaseURL =  process.env.DATABASE_URL;
 
-const allowedOrigins = ["https://your-app-name.netlify.app"];
-
 app.use(cors({
-    origin: allowedOrigins,
     origin: [process.env.ORIGIN],
     methods: ["GET","POST","PUT","PATCH","DELETE"],
     credentials: true,
